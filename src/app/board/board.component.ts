@@ -6,6 +6,7 @@ import {Observable, of} from 'rxjs';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RandomAi} from '../ai/random-ai';
 import {AiFactory} from '../ai/ai-factory';
+import {IAi} from '../ai/iai';
 
 
 @Component({
@@ -16,8 +17,8 @@ import {AiFactory} from '../ai/ai-factory';
 export class BoardComponent implements OnInit {
 
     description = 'Rock-paper-scissors (also known as scissors-paper-rock or other variants) is a hand game usually played between ' +
-    'two people, in which each player simultaneously forms one of three shapes with an outstretched hand. <br>A player who decides to play ' +
-    'rock will beat another player who has chosen scissors ("rock crushes scissors" or sometimes "blunts scissors"), but will ' +
+  'two people, in which each player simultaneously forms one of three shapes with an outstretched hand. <br>A player who decides to play' +
+    ' rock will beat another player who has chosen scissors ("rock crushes scissors" or sometimes "blunts scissors"), but will ' +
     'lose to one who has played paper ("paper covers rock"); a play of paper will lose to a play of scissors ("scissors cuts paper"). ' +
     ' <br>If both players choose the same shape, the game is tied and is usually immediately replayed to break the tie.<br>' +
         '<b>How to play</b><br>Press "New Game" and enter player name. Now you can press any button (ROCK, PAPER, SCISSORS) to make one' +
@@ -40,7 +41,7 @@ export class BoardComponent implements OnInit {
 
     playerName = '';
 
-    private ai = new RandomAi();
+    private ai: IAi;
     lastHumanTurn = '';
 
     aiName = '';
@@ -52,11 +53,6 @@ export class BoardComponent implements OnInit {
                 private engine: GameEngineService,
                 private dialog: MatDialog,
                 private formBuilder: FormBuilder) {
-        // this.playForm = this.formBuilder.group({
-        //     name: ''
-        // });
-        // this.nameControl = this.playForm.get('name') as FormControl;
-
     }
 
     ngOnInit() {
@@ -71,22 +67,7 @@ export class BoardComponent implements OnInit {
             }).pipe(
                 tap(() => {this.selectedItem = ''; }),
                 debounceTime(300),
-                switchMap(val => of(val))) // wait 500ms after the last event before emitting last event
-                // distinctUntilChanged(), // only emit if value is different from previous value
-                // switchMap(val => {
-                //     this.selectedItem = '';
-                //
-                //     const aiTurn = Math.floor(Math.random() * 3);
-                //
-                //     const aiResponse = this.items[aiTurn];
-                //
-                //     this.selectedItem = aiResponse;
-                //
-                //     const res = this.engine.process(item, aiResponse);
-                //
-                //     console.log(' my turn: ' + val + ' ai turn: ' + aiResponse + ' res = ' + res.player + ':' + res.ai);
-                //
-                //     return of(res);
+                switchMap(val => of(val)))
                 // }))
                 .subscribe(value => {
                     this.selectedItem = '';
@@ -140,14 +121,8 @@ export class BoardComponent implements OnInit {
                 const changed = this.playerName !== result.name;
                 this.playerName = result.name;
                 this.ai = this.aiFactory.create(result.ai.name);
-
-                if (changed) {
-/*
-                    this.trackboxService.updateTrack(this.track).subscribe(res => {
-                        console.log('Track updated');
-                    });
-*/
-                }
+                this.aiName = result.ai.name;
+                this.aiVersion = result.ai.version;
             }
         });
 

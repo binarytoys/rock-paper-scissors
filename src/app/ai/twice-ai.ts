@@ -1,5 +1,4 @@
 import {IAi} from './iai';
-import {never} from 'rxjs';
 
 export class TwiceInARowAi implements IAi {
     public readonly name = 'Twice';

@@ -11,6 +11,10 @@ export class AiFactory {
         if (aiName.toLowerCase() === 'random') {
             return new RandomAi();
         }
+        if (aiName.toLowerCase() === 'twice') {
+            return new TwiceInARowAi();
+        }
+        return new RandomAi();
     }
 
     public getList() {
