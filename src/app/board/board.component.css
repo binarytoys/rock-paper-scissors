@@ -1,0 +1,50 @@
+.action-button {
+  font-weight: 500;
+}
+
+mat-card {
+    width: 500px;
+}
+
+/*
+mat-card-actions {
+  align-items: left;
+}
+*/
+
+.center {
+    width: 75%;
+    margin: 10px auto;
+}
+
+.main-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.data-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+mat-chip {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+}
+
+mat-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+mat-expansion-panel {
+    box-shadow: none !important;
+}
+
+.dyn-button {
+    border: 1px none currentColor;
+}
